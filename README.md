@@ -1,36 +1,113 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Illyria Construct - Interior Design Studio Website
 
-## Getting Started
+A premium, fully responsive interior design studio website built with Next.js 16, React 19, TypeScript, Tailwind CSS v4, and Framer Motion.
 
-First, run the development server:
+## 🎨 Features
+
+- **Modern Tech Stack**: Next.js 16 App Router, React 19, TypeScript (strict mode)
+- **Stunning Animations**: Framer Motion for smooth scroll animations and micro-interactions
+- **Responsive Design**: Mobile-first approach with breakpoints for all screen sizes
+- **Brand Identity**: Custom design system with cohesive color palette and typography
+- **SEO Optimized**: Comprehensive metadata and semantic HTML
+- **Accessible**: WCAG 2.1 AA compliance with proper ARIA labels
+- **Performance**: Optimized images, lazy loading, and efficient animations
+
+## 🚀 Getting Started
+
+### Installation
 
 ```bash
+# Install dependencies
+npm install
+
+# Run development server
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+
+# Build for production
+npm run build
+
+# Start production server
+npm start
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) to view the site.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 📁 Project Structure
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```
+illyria-construct/
+├── app/
+│   ├── components/          # Shared components
+│   │   ├── Header.tsx
+│   │   ├── SiteFooter.tsx
+│   │   └── sections/        # Homepage sections
+│   ├── about/              # About page
+│   ├── services/           # Services page
+│   ├── projects/           # Projects gallery
+│   ├── gallery/            # Image gallery
+│   ├── contact/            # Contact form
+│   └── globals.css         # Brand styles
+└── public/                 # Static assets
+```
 
-## Learn More
+## 🎨 Brand Colors
 
-To learn more about Next.js, take a look at the following resources:
+- **Primary Brand**: `#2F4A3A` - Deep forest green
+- **Brand Soft**: `#3B5A48` - Lighter forest green
+- **Brand Beige**: `#F4EEE5` - Warm background
+- **Brand Gold**: `#C4A962` - Accent gold
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 📄 Pages
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- **/** - Homepage with hero, services, projects, testimonials
+- **/about** - Company story, team, values
+- **/services** - Detailed service offerings
+- **/projects** - Filterable project gallery
+- **/gallery** - Image gallery with lightbox
+- **/contact** - Contact form and information
 
-## Deploy on Vercel
+## 🎬 Animations
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+All animations use Framer Motion for smooth, performant effects:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Scroll-triggered reveals
+- Stagger animations for lists
+- Hover interactions
+- Page transitions
+
+## 🔧 Customization
+
+### Brand Colors
+
+Edit `app/globals.css` to modify the color scheme.
+
+### Content
+
+Update text and images in respective page files under `app/`.
+
+### Navigation
+
+Modify `app/components/Header.tsx` to add/remove menu items.
+
+## 🚀 Deployment
+
+Deploy to Vercel with one click:
+
+```bash
+npm i -g vercel
+vercel
+```
+
+Or use any hosting platform that supports Next.js.
+
+## 📞 Contact
+
+**Illyria Construct**
+
+- Email: <hello@illyriaconstruct.com>
+- Phone: +380 (93) 123-4567
+- Location: Lviv, Ukraine
+
+---
+
+**Built with Next.js 16, React 19, TypeScript, Tailwind CSS v4, and Framer Motion**
