@@ -101,7 +101,7 @@ export default function GalleryPage() {
                                     <div className="absolute inset-0 bg-brand/0 group-hover:bg-brand/60 transition-all duration-300" />
 
                                     {/* Info */}
-                                    <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
+                                    <div className="absolute bottom-0 left-0 right-0 p-4 bg-linear-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
                                         <h3 className="text-white font-semibold text-sm">{image.title}</h3>
                                         <p className="text-white/80 text-xs">{image.location}</p>
                                     </div>

@@ -7,7 +7,7 @@ import { motion } from 'framer-motion';
 
 export default function Hero() {
     return (
-        <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-brand-beige via-brand-beige-soft to-brand-beige pt-20">
+        <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-linear-to-br from-brand-beige via-brand-beige-soft to-brand-beige pt-20">
             {/* Background Pattern */}
             <div className="absolute inset-0 opacity-5">
                 <div className="absolute inset-0" style={{
@@ -78,7 +78,7 @@ export default function Hero() {
                     transition={{ duration: 0.8, delay: 0.2, ease: [0.25, 0.1, 0.25, 1] }}
                     className="relative"
                 >
-                    <div className="relative aspect-[4/5] rounded-2xl overflow-hidden shadow-2xl">
+                    <div className="relative aspect-4/5 rounded-2xl overflow-hidden shadow-2xl">
                         <Image
                             src="/images/hero.jpg"
                             alt="Modern luxury living space interior design"

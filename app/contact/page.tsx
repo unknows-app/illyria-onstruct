@@ -1,11 +1,12 @@
 'use client';
 
 import { useState } from 'react';
-import { Mail, Phone, MapPin, Clock, Send } from 'lucide-react';
+import { Mail, Phone, MapPin, Clock, Send, AlertCircle } from 'lucide-react';
 import Header from '../components/Header';
 import SiteFooter from '../components/SiteFooter';
 import AnimatedSection from '../components/AnimatedSection';
 import StaggerContainer, { StaggerItem } from '../components/StaggerContainer';
+import { contactFormSchema, type ContactFormData } from '../lib/validations';
 
 const contactInfo = [
     {
@@ -35,7 +36,7 @@ const contactInfo = [
 ];
 
 export default function ContactPage() {
-    const [formData, setFormData] = useState({
+    const [formData, setFormData] = useState<ContactFormData>({
         name: '',
         email: '',
         phone: '',
@@ -44,26 +45,70 @@ export default function ContactPage() {
         message: '',
     });
     const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
+    const [errorMessage, setErrorMessage] = useState<string>('');
+    const [validationErrors, setValidationErrors] = useState<Record<string, string>>({});
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setStatus('loading');
+        setErrorMessage('');
+        setValidationErrors({});
 
-        // Simulate API call
-        await new Promise(resolve => setTimeout(resolve, 1500));
-        setStatus('success');
+        // Validate form data
+        const validation = contactFormSchema.safeParse(formData);
 
-        // Reset form
-        setFormData({
-            name: '',
-            email: '',
-            phone: '',
-            projectType: '',
-            budget: '',
-            message: '',
-        });
+        if (!validation.success) {
+            const errors: Record<string, string> = {};
+            validation.error.issues.forEach((issue) => {
+                if (issue.path[0]) {
+                    errors[issue.path[0].toString()] = issue.message;
+                }
+            });
+            setValidationErrors(errors);
+            setStatus('idle');
+            return;
+        }
 
-        setTimeout(() => setStatus('idle'), 3000);
+        try {
+            const response = await fetch('/api/contact', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData),
+            });
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                throw new Error(data.error || 'Failed to send message');
+            }
+
+            setStatus('success');
+
+            // Reset form
+            setFormData({
+                name: '',
+                email: '',
+                phone: '',
+                projectType: '',
+                budget: '',
+                message: '',
+            });
+
+            // Reset success message after 5 seconds
+            setTimeout(() => setStatus('idle'), 5000);
+        } catch (error) {
+            console.error('Form submission error:', error);
+            setStatus('error');
+            setErrorMessage(error instanceof Error ? error.message : 'Failed to send message. Please try again.');
+
+            // Reset error after 5 seconds
+            setTimeout(() => {
+                setStatus('idle');
+                setErrorMessage('');
+            }, 5000);
+        }
     };
 
     type FormElement = HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement;
@@ -146,9 +191,12 @@ export default function ContactPage() {
                                             value={formData.name}
                                             onChange={handleChange}
                                             required
-                                            className="w-full px-4 py-3 rounded-lg border-2 border-gray-200 focus:border-brand focus:outline-none transition-colors"
+                                            className={`w-full px-4 py-3 rounded-lg border-2 ${validationErrors.name ? 'border-red-300' : 'border-gray-200'} focus:border-brand focus:outline-none transition-colors`}
                                             placeholder="Your name"
                                         />
+                                        {validationErrors.name && (
+                                            <p className="mt-1 text-sm text-red-600">{validationErrors.name}</p>
+                                        )}
                                     </div>
 
                                     <div className="grid md:grid-cols-2 gap-6">
@@ -163,9 +211,12 @@ export default function ContactPage() {
                                                 value={formData.email}
                                                 onChange={handleChange}
                                                 required
-                                                className="w-full px-4 py-3 rounded-lg border-2 border-gray-200 focus:border-brand focus:outline-none transition-colors"
+                                                className={`w-full px-4 py-3 rounded-lg border-2 ${validationErrors.email ? 'border-red-300' : 'border-gray-200'} focus:border-brand focus:outline-none transition-colors`}
                                                 placeholder="your@email.com"
                                             />
+                                            {validationErrors.email && (
+                                                <p className="mt-1 text-sm text-red-600">{validationErrors.email}</p>
+                                            )}
                                         </div>
 
                                         <div>
@@ -178,9 +229,12 @@ export default function ContactPage() {
                                                 name="phone"
                                                 value={formData.phone}
                                                 onChange={handleChange}
-                                                className="w-full px-4 py-3 rounded-lg border-2 border-gray-200 focus:border-brand focus:outline-none transition-colors"
+                                                className={`w-full px-4 py-3 rounded-lg border-2 ${validationErrors.phone ? 'border-red-300' : 'border-gray-200'} focus:border-brand focus:outline-none transition-colors`}
                                                 placeholder="+380 XX XXX XXXX"
                                             />
+                                            {validationErrors.phone && (
+                                                <p className="mt-1 text-sm text-red-600">{validationErrors.phone}</p>
+                                            )}
                                         </div>
                                     </div>
 
@@ -195,7 +249,7 @@ export default function ContactPage() {
                                                 value={formData.projectType}
                                                 onChange={handleChange}
                                                 required
-                                                className="w-full px-4 py-3 rounded-lg border-2 border-gray-200 focus:border-brand focus:outline-none transition-colors"
+                                                className={`w-full px-4 py-3 rounded-lg border-2 ${validationErrors.projectType ? 'border-red-300' : 'border-gray-200'} focus:border-brand focus:outline-none transition-colors`}
                                             >
                                                 <option value="">Select type</option>
                                                 <option value="residential">Residential Design</option>
@@ -203,6 +257,9 @@ export default function ContactPage() {
                                                 <option value="renovation">Renovation</option>
                                                 <option value="consultation">Consultation</option>
                                             </select>
+                                            {validationErrors.projectType && (
+                                                <p className="mt-1 text-sm text-red-600">{validationErrors.projectType}</p>
+                                            )}
                                         </div>
 
                                         <div>
@@ -236,9 +293,12 @@ export default function ContactPage() {
                                             onChange={handleChange}
                                             required
                                             rows={6}
-                                            className="w-full px-4 py-3 rounded-lg border-2 border-gray-200 focus:border-brand focus:outline-none transition-colors resize-none"
+                                            className={`w-full px-4 py-3 rounded-lg border-2 ${validationErrors.message ? 'border-red-300' : 'border-gray-200'} focus:border-brand focus:outline-none transition-colors resize-none`}
                                             placeholder="Tell us about your project, your vision, and any specific requirements..."
                                         />
+                                        {validationErrors.message && (
+                                            <p className="mt-1 text-sm text-red-600">{validationErrors.message}</p>
+                                        )}
                                     </div>
 
                                     <button
@@ -249,7 +309,7 @@ export default function ContactPage() {
                                         {status === 'loading' ? (
                                             'Sending...'
                                         ) : status === 'success' ? (
-                                            'Message Sent!'
+                                            '✓ Message Sent!'
                                         ) : (
                                             <>
                                                 Send Message
@@ -260,7 +320,18 @@ export default function ContactPage() {
 
                                     {status === 'success' && (
                                         <div className="p-4 bg-green-50 border border-green-200 rounded-lg text-green-800">
-                                            Thank you! We'll get back to you within 24 hours.
+                                            <p className="font-medium">Thank you for contacting us!</p>
+                                            <p className="text-sm mt-1">We'll get back to you within 24 hours.</p>
+                                        </div>
+                                    )}
+
+                                    {status === 'error' && errorMessage && (
+                                        <div className="p-4 bg-red-50 border border-red-200 rounded-lg text-red-800 flex gap-3">
+                                            <AlertCircle className="h-5 w-5 shrink-0 mt-0.5" />
+                                            <div>
+                                                <p className="font-medium">Failed to send message</p>
+                                                <p className="text-sm mt-1">{errorMessage}</p>
+                                            </div>
                                         </div>
                                     )}
                                 </form>
@@ -273,7 +344,7 @@ export default function ContactPage() {
                                 </h2>
 
                                 {/* Google Maps Embed */}
-                                <div className="aspect-[4/3] rounded-2xl overflow-hidden shadow-lg mb-6">
+                                <div className="aspect-4/3 rounded-2xl overflow-hidden shadow-lg mb-6">
                                     <iframe
                                         src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2573.0846879984733!2d24.029174576916285!3d49.84127923171917!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x473add7c09109a57%3A0x4223c517012378e2!2sTaras%20Shevchenko%20Monument!5e0!3m2!1sen!2sua!4v1699294400000!5m2!1sen!2sua"
                                         width="100%"

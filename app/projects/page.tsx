@@ -74,7 +74,7 @@ export default function ProjectsPage() {
                                 <StaggerItem key={project.slug}>
                                     <div className="group bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500">
                                         {/* Image */}
-                                        <div className="relative aspect-[4/3] overflow-hidden">
+                                        <div className="relative aspect-4/3 overflow-hidden">
                                             <Image
                                                 src={project.coverImage}
                                                 alt={project.title}

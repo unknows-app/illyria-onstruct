@@ -116,7 +116,7 @@ export default function ProjectDetailPage({ params }: ProjectPageProps) {
                                 </div>
 
                                 {/* Main Project Image */}
-                                <div className="relative aspect-[4/3] rounded-2xl overflow-hidden shadow-2xl">
+                                <div className="relative aspect-4/3 rounded-2xl overflow-hidden shadow-2xl">
                                     <Image
                                         src={project.coverImage}
                                         alt={project.title}
@@ -170,7 +170,7 @@ export default function ProjectDetailPage({ params }: ProjectPageProps) {
                         <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 gap-6">
                             {project.images.map((image, index) => (
                                 <StaggerItem key={index}>
-                                    <div className="relative aspect-[4/3] rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-shadow">
+                                    <div className="relative aspect-4/3 rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-shadow">
                                         <Image
                                             src={image}
                                             alt={`${project.title} - Image ${index + 1}`}
@@ -296,7 +296,7 @@ export default function ProjectDetailPage({ params }: ProjectPageProps) {
                                             href={`/projects/${relatedProject.slug}`}
                                             className="group block bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all"
                                         >
-                                            <div className="relative aspect-[4/3] overflow-hidden">
+                                            <div className="relative aspect-4/3 overflow-hidden">
                                                 <Image
                                                     src={relatedProject.coverImage}
                                                     alt={relatedProject.title}

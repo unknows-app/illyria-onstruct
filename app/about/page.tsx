@@ -80,7 +80,7 @@ export default function AboutPage() {
                             </AnimatedSection>
 
                             <AnimatedSection delay={0.2} className="relative">
-                                <div className="aspect-[4/3] rounded-2xl overflow-hidden shadow-2xl">
+                                <div className="aspect-4/3 rounded-2xl overflow-hidden shadow-2xl">
                                     <Image
                                         src="/images/hero.jpg"
                                         alt="Illyria Construct Design Studio"

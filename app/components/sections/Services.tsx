@@ -81,7 +81,7 @@ export default function Services() {
                                     {/* Learn More Link */}
                                     <a
                                         href={service.link}
-                                        className="inline-flex items-center text-[color:var(--color-brand-gold)] font-medium group-hover:gap-2 transition-all"
+                                        className="inline-flex items-center text-(--color-brand-gold) font-medium group-hover:gap-2 transition-all"
                                     >
                                         Learn More
                                         <span className="inline-block group-hover:translate-x-1 transition-transform ml-1">
@@ -90,7 +90,7 @@ export default function Services() {
                                     </a>
 
                                     {/* Decorative Corner */}
-                                    <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-br from-brand-gold/10 to-transparent rounded-bl-full opacity-0 group-hover:opacity-100 transition-opacity" />
+                                    <div className="absolute top-0 right-0 w-20 h-20 bg-linear-to-br from-brand-gold/10 to-transparent rounded-bl-full opacity-0 group-hover:opacity-100 transition-opacity" />
                                 </div>
                             </StaggerItem>
                         );
